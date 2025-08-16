@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- SEO Meta Tags for Academic Audience -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Humanizer for Academic Writing | Refine Research Papers</title>
+    <meta name="description" content="Elevate your academic writing. Convert AI-generated text into clear, sophisticated, and authentic prose for essays, research papers, and theses. Bypass AI detectors and improve your academic tone.">
+    <meta name="keywords" content="academic writing tool, ai humanizer, humanize ai text, paraphrase academic papers, ai for research, improve academic tone, bypass ai detection for students, research paper writer">
+    <meta name="author" content="YourAppName">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourapp.com/">
+    <meta property="og:title" content="AI Humanizer for Academic Writing | Refine Research Papers">
+    <meta property="og:description" content="Elevate your academic writing. Convert AI-generated text into clear, sophisticated, and authentic prose for essays, research papers, and theses.">
+    <meta property="og:image" content="https://placehold.co/1200x630/010101/25f4ee?text=Academic+AI+Humanizer">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://yourapp.com/">
+    <meta property="twitter:title" content="AI Humanizer for Academic Writing | Refine Research Papers">
+    <meta property="twitter:description" content="Elevate your academic writing. Convert AI-generated text into clear, sophisticated, and authentic prose for essays, research papers, and theses.">
+    <meta property="twitter:image" content="https://placehold.co/1200x630/010101/25f4ee?text=Academic+AI+Humanizer">
+
+    <!-- Favicon -->
+    <link rel="icon" href="https://placehold.co/32x32/25f4ee/010101?text=A">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #010101;
+            color: #E5E7EB;
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #ff2d55, #ff4500, #25f4ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        textarea {
+            background-color: #101010;
+            border: 1px solid #27272A;
+            transition: border-color .3s, box-shadow .3s;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: #25f4ee;
+            box-shadow: 0 0 0 3px rgba(37, 244, 238, 0.1);
+        }
+        textarea::-webkit-scrollbar { width: 8px; }
+        textarea::-webkit-scrollbar-track { background: #101010; }
+        textarea::-webkit-scrollbar-thumb { background-color: #333; border-radius: 10px; border: 2px solid #101010; }
+        textarea::-webkit-scrollbar-thumb:hover { background-color: #555; }
+        .loader {
+            width: 20px; height: 20px; border: 3px solid #FFF; border-bottom-color: transparent; border-radius: 50%;
+            display: inline-block; box-sizing: border-box; animation: rotation 1s linear infinite;
+        }
+        @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        .input-heading {
+            position: relative;
+            padding-bottom: 8px;
+        }
+        .input-heading::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, #ff2d55, #25f4ee);
+            border-radius: 2px;
+        }
+
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* NEW: Interaction styles for buttons */
+        .action-button {
+            transition: background-color 0.2s ease-in-out, box-shadow 0.3s ease-in-out, transform 0.1s ease-in-out;
+        }
+        .action-button:active {
+            transform: scale(0.95);
+        }
+        .action-glow {
+            box-shadow: 0 0 12px 2px rgba(37, 244, 238, 0.5);
+        }
+
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto px-4 py-12 sm:py-20">
+
+        <header class="text-center max-w-4xl mx-auto mb-12">
+            <h1 class="text-4xl md:text-6xl font-black tracking-tighter mb-4">
+                Humanize AI Text for <span class="gradient-text">Academic Excellence</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-400">
+                Transform AI-generated drafts into sophisticated, clear, and original academic writing suitable for papers, theses, and essays.
+            </p>
+        </header>
+
+        <main class="max-w-7xl mx-auto">
+            <div class="bg-[#121212] border border-gray-800/50 rounded-3xl p-6 md:p-8 shadow-2xl">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="flex flex-col">
+                        <div class="flex justify-between items-center mb-3">
+                            <label for="ai-input" class="text-lg font-semibold flex items-center gap-x-3 input-heading">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400"><path d="M12 8V4H8"/><rect x="4" y="12" width="16" height="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v-2a3 3 0 0 0-3-3H9m-2.5 6.5L4.55 12"/></svg>
+                                AI-Generated Draft
+                            </label>
+                            <div class="flex items-center space-x-2">
+                                <button id="paste-button" title="Paste Text" class="action-button p-2 bg-gray-700 hover:bg-gray-600 rounded-lg"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="text-white"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3z"/></svg></button>
+                                <button id="clear-button" title="Clear Text" class="action-button p-2 bg-gray-700 hover:bg-gray-600 rounded-lg"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="text-white"><path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/></svg></button>
+                            </div>
+                        </div>
+                        <textarea id="ai-input" class="w-full h-80 md:h-96 rounded-xl p-4 text-gray-300 resize-none" placeholder="Paste your AI-generated text for an academic paper, essay, or thesis..."></textarea>
+                        <div id="word-counter" class="text-right text-sm text-gray-500 mt-2 pr-1">0 words</div>
+                    </div>
+                    
+                    <div class="flex flex-col">
+                        <div class="flex justify-between items-center mb-3">
+                            <label for="human-output" class="text-lg font-semibold flex items-center gap-x-3 input-heading">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                                Humanized Academic Text
+                            </label>
+                            <button id="copy-button" title="Copy Text" class="action-button bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-3 rounded-lg flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                                <svg id="copy-icon-clipboard" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3z"/></svg>
+                                <svg id="copy-icon-check" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="hidden" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022z"/></svg>
+                                <span id="copy-button-text">Copy</span>
+                            </button>
+                        </div>
+                        <textarea id="human-output" class="w-full h-80 md:h-96 rounded-xl p-4 text-gray-300 resize-none" readonly placeholder="Your refined, human-like academic text will appear here..."></textarea>
+                    </div>
+                </div>
+
+                <div class="text-center mt-8">
+                    <button id="humanize-button" class="bg-gradient-to-r from-pink-500 to-cyan-400 hover:opacity-90 text-white font-bold py-4 px-10 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center mx-auto space-x-3 w-full sm:w-auto disabled:opacity-70 disabled:scale-100">
+                        <span id="humanize-button-text">Humanize</span>
+                        <div id="loader" class="hidden"></div>
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- How It Works Section -->
+        <section id="how-it-works" class="text-center mt-20 sm:mt-32 fade-in-section">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">Refine Your Academic Writing in <span class="gradient-text">3 Steps</span></h2>
+            <p class="max-w-2xl mx-auto text-gray-400 mb-12">Our process is designed for academic rigor and simplicity.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="bg-[#121212] p-8 rounded-2xl border border-gray-800/50">
+                    <div class="text-4xl mb-4 gradient-text font-black">1</div>
+                    <h3 class="text-xl font-bold mb-2">Paste Your Draft</h3>
+                    <p class="text-gray-400">Copy the content from your AI tool and paste it into the 'AI-Generated Draft' box.</p>
+                </div>
+                <div class="bg-[#121212] p-8 rounded-2xl border border-gray-800/50">
+                    <div class="text-4xl mb-4 gradient-text font-black">2</div>
+                    <h3 class="text-xl font-bold mb-2">Click 'Humanize'</h3>
+                    <p class="text-gray-400">Our advanced algorithms analyze and rewrite your text for an academic audience.</p>
+                </div>
+                <div class="bg-[#121212] p-8 rounded-2xl border border-gray-800/50">
+                    <div class="text-4xl mb-4 gradient-text font-black">3</div>
+                    <h3 class="text-xl font-bold mb-2">Review & Integrate</h3>
+                    <p class="text-gray-400">Your refined, human-like text is ready to be integrated into your academic work.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Choose Us Section -->
+        <section id="features" class="mt-20 sm:mt-32 fade-in-section">
+            <div class="text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">The <span class="gradient-text">Academic Advantage</span></h2>
+                <p class="max-w-2xl mx-auto text-gray-400 mb-12">We provide features that make your academic writing clear, credible, and original.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <div class="flex items-start space-x-4">
+                    <div class="flex-shrink-0 bg-gray-800/50 p-3 rounded-lg"><svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg></div>
+                    <div>
+                        <h3 class="text-xl font-bold">Ensure Originality</h3>
+                        <p class="text-gray-400 mt-1">Our paraphrasing engine restructures sentences to help you avoid plagiarism and bypass AI detectors.</p>
+                    </div>
+                </div>
+                <div class="flex items-start space-x-4">
+                    <div class="flex-shrink-0 bg-gray-800/50 p-3 rounded-lg"><svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg></div>
+                    <div>
+                        <h3 class="text-xl font-bold">Strengthen Academic Tone</h3>
+                        <p class="text-gray-400 mt-1">We refine phrasing to be more formal, objective, and suitable for scholarly publications.</p>
+                    </div>
+                </div>
+                <div class="flex items-start space-x-4">
+                    <div class="flex-shrink-0 bg-gray-800/50 p-3 rounded-lg"><svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg></div>
+                    <div>
+                        <h3 class="text-xl font-bold">Improve Clarity & Flow</h3>
+                        <p class="text-gray-400 mt-1">Our tool rephrases complex sentences to improve readability and logical flow between ideas.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="mt-20 sm:mt-32 fade-in-section">
+             <div class="text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Trusted by <span class="gradient-text">Students & Researchers</span></h2>
+                <p class="max-w-2xl mx-auto text-gray-400 mb-12">See how your peers are enhancing their academic work.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div class="bg-[#121212] p-8 rounded-2xl border border-gray-800/50">
+                    <p class="text-gray-300 mb-4">"This tool helped me refine the introduction to my thesis. The language became much clearer and more professional. It saved me hours of editing."</p>
+                    <div class="flex items-center">
+                        <img class="w-12 h-12 rounded-full mr-4" src="https://placehold.co/100x100/25f4ee/010101?text=A" alt="User Avatar">
+                        <div>
+                            <p class="font-bold">Aisha K.</p>
+                            <p class="text-sm text-gray-400">PhD Candidate</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-[#121212] p-8 rounded-2xl border border-gray-800/50">
+                    <p class="text-gray-300 mb-4">"As a non-native English speaker, getting the academic tone right is challenging. This humanizer is incredible for polishing my research papers before submission."</p>
+                     <div class="flex items-center">
+                        <img class="w-12 h-12 rounded-full mr-4" src="https://placehold.co/100x100/ff2d55/010101?text=C" alt="User Avatar">
+                        <div>
+                            <p class="font-bold">Chen L.</p>
+                            <p class="text-sm text-gray-400">Postdoctoral Researcher</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="mt-20 sm:mt-32 max-w-3xl mx-auto fade-in-section">
+            <div class="text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-12">Questions from the <span class="gradient-text">Academic Community</span></h2>
+            </div>
+            <div class="space-y-4">
+                <div class="bg-[#121212] border border-gray-800/50 rounded-xl">
+                    <button class="faq-toggle w-full flex justify-between items-center text-left p-6">
+                        <span class="font-semibold text-lg">Is using this tool considered plagiarism?</span>
+                        <svg class="faq-icon w-6 h-6 transition-transform transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
+                        <p class="p-6 pt-0 text-gray-400">Our tool is a writing assistant, similar to a grammar checker or thesaurus. It paraphrases and refines your text, but the original ideas remain yours. We always recommend checking your institution's academic integrity guidelines and properly citing all sources.</p>
+                    </div>
+                </div>
+                <div class="bg-[#121212] border border-gray-800/50 rounded-xl">
+                    <button class="faq-toggle w-full flex justify-between items-center text-left p-6">
+                        <span class="font-semibold text-lg">Can it handle technical or specialized language?</span>
+                        <svg class="faq-icon w-6 h-6 transition-transform transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
+                        <p class="p-6 pt-0 text-gray-400">Yes, our AI is trained on a vast corpus of academic literature across various fields. It understands context and can effectively handle technical terminology, preserving the meaning while improving the prose.</p>
+                    </div>
+                </div>
+                <div class="bg-[#121212] border border-gray-800/50 rounded-xl">
+                    <button class="faq-toggle w-full flex justify-between items-center text-left p-6">
+                        <span class="font-semibold text-lg">Will my paper pass AI detection software?</span>
+                        <svg class="faq-icon w-6 h-6 transition-transform transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
+                        <p class="p-6 pt-0 text-gray-400">Our primary goal is to improve writing quality. A natural byproduct is that the refined text is far less likely to be flagged by AI detectors. While we can't guarantee a 100% pass rate as detectors evolve, our output is consistently rated as human by leading tools.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="bg-[#121212] border-t border-gray-800/50 mt-20 sm:mt-32">
+        <div class="container mx-auto px-4 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center text-center md:text-left">
+                <p class="text-gray-400">&copy; 2025 YourAppName. All Rights Reserved.</p>
+                <div class="flex space-x-4 mt-4 md:mt-0">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JSON-LD for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "Is using this AI humanizer considered plagiarism?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Our tool functions as an advanced writing assistant to paraphrase and refine your own ideas. The core concepts remain yours. However, you must always adhere to your institution's academic integrity policies and cite all sources appropriately."
+        }
+      },{
+        "@type": "Question",
+        "name": "Can it handle technical language from different academic fields?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, our AI is trained on a diverse range of academic literature, enabling it to understand and correctly use specialized terminology from various fields while improving the overall structure and flow of the text."
+        }
+      },{
+        "@type": "Question",
+        "name": "Will my paper pass AI detection tools like Turnitin?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Our primary goal is to enhance the quality and authenticity of your writing. This process naturally makes the text appear more human-written and less likely to be flagged by AI detectors. While we cannot guarantee a 100% pass rate, the output is designed to meet the standards of academic originality."
+        }
+      }]
+    }
+    </script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const aiInput = document.getElementById('ai-input');
+            const humanOutput = document.getElementById('human-output');
+            const humanizeButton = document.getElementById('humanize-button');
+            const humanizeButtonText = document.getElementById('humanize-button-text');
+            const loader = document.getElementById('loader');
+            const copyButton = document.getElementById('copy-button');
+            const copyButtonText = document.getElementById('copy-button-text');
+            const copyIconClipboard = document.getElementById('copy-icon-clipboard');
+            const copyIconCheck = document.getElementById('copy-icon-check');
+            const pasteButton = document.getElementById('paste-button');
+            const clearButton = document.getElementById('clear-button');
+            const wordCounter = document.getElementById('word-counter');
+
+            humanizeButton.addEventListener('click', handleHumanizeClick);
+            copyButton.addEventListener('click', handleCopyClick);
+            pasteButton.addEventListener('click', handlePasteClick);
+            clearButton.addEventListener('click', handleClearClick);
+            aiInput.addEventListener('input', updateWordCount);
+
+            async function handleHumanizeClick() {
+                const inputText = aiInput.value.trim();
+                if (!inputText) { humanOutput.value = "Please paste your draft to begin."; return; }
+                setLoadingState(true);
+                const humanizedText = await simulateHumanization(inputText);
+                humanOutput.value = '';
+                typewriterEffect(humanizedText, humanOutput, () => {
+                    setLoadingState(false);
+                    copyButton.disabled = false;
+                });
+            }
+
+            function handlePasteClick() {
+                pasteButton.classList.add('action-glow');
+                setTimeout(() => pasteButton.classList.remove('action-glow'), 400);
+
+                navigator.clipboard.readText().then(text => {
+                    aiInput.value = text;
+                    updateWordCount();
+                }).catch(err => console.error('Failed to read clipboard: ', err));
+            }
+
+            function handleClearClick() {
+                clearButton.classList.add('action-glow');
+                setTimeout(() => clearButton.classList.remove('action-glow'), 400);
+
+                aiInput.value = '';
+                humanOutput.value = '';
+                updateWordCount();
+                copyButton.disabled = true;
+                copyButtonText.textContent = 'Copy';
+                copyButton.classList.remove('bg-green-500');
+                copyButton.classList.add('bg-gray-700');
+                copyIconClipboard.classList.remove('hidden');
+                copyIconCheck.classList.add('hidden');
+            }
+
+            function updateWordCount() {
+                const text = aiInput.value.trim();
+                const words = text === '' ? 0 : text.split(/\s+/).length;
+                wordCounter.textContent = `${words} ${words === 1 ? 'word' : 'words'}`;
+            }
+            
+            function typewriterEffect(text, element, callback) {
+                let i = 0;
+                element.value = '';
+                function type() {
+                    if (i < text.length) {
+                        element.value += text.charAt(i);
+                        i++;
+                        setTimeout(type, 10);
+                    } else if (callback) {
+                        callback();
+                    }
+                }
+                type();
+            }
+
+            function setLoadingState(isLoading) {
+                humanizeButton.disabled = isLoading;
+                if (isLoading) {
+                    humanizeButtonText.textContent = 'Refining...';
+                    loader.classList.remove('hidden');
+                    loader.classList.add('loader');
+                    humanOutput.value = "Analyzing and rewriting for academic clarity...";
+                } else {
+                    humanizeButtonText.textContent = 'Humanize Text';
+                    loader.classList.add('hidden');
+                    loader.classList.remove('loader');
+                }
+            }
+
+            function simulateHumanization(text) {
+                return new Promise(resolve => {
+                    setTimeout(() => {
+                        let newText = text;
+                        const replacements = { 'utilize': 'employ', 'in order to': 'to', 'furthermore': 'moreover', 'consequently': 'thus', 'therefore': 'hence', 'commence': 'begin', 'demonstrate': 'illustrate', 'ascertain': 'determine', 'leverage': 'use', 'synergize': 'integrate', 'the aforementioned': 'the preceding' };
+                        for (const [aiWord, humanWord] of Object.entries(replacements)) {
+                            const regex = new RegExp(`\\b${aiWord}\\b`, 'gi');
+                            newText = newText.replace(regex, humanWord);
+                        }
+                        const sentences = newText.split('. ');
+                        if (sentences.length > 1) {
+                           sentences[0] = "It is important to note that " + sentences[0].charAt(0).toLowerCase() + sentences[0].slice(1);
+                           if(sentences.length > 2) {
+                                sentences[sentences.length - 2] += "; this finding is critical for the subsequent analysis.";
+                           }
+                        }
+                        resolve(sentences.join('. ').trim());
+                    }, 1500);
+                });
+            }
+
+            function handleCopyClick() {
+                if (!humanOutput.value || copyButton.disabled) return;
+                navigator.clipboard.writeText(humanOutput.value).then(() => {
+                    copyButtonText.textContent = 'Copied!';
+                    copyIconClipboard.classList.add('hidden');
+                    copyIconCheck.classList.remove('hidden');
+                    copyButton.classList.add('bg-green-500');
+                    copyButton.classList.remove('bg-gray-700');
+                    setTimeout(() => {
+                        copyButtonText.textContent = 'Copy';
+                        copyIconClipboard.classList.remove('hidden');
+                        copyIconCheck.classList.add('hidden');
+                        copyButton.classList.remove('bg-green-500');
+                        copyButton.classList.add('bg-gray-700');
+                    }, 2000);
+                }).catch(err => console.error('Failed to copy: ', err));
+            }
+
+            // FAQ Accordion Logic
+            const faqToggles = document.querySelectorAll('.faq-toggle');
+            faqToggles.forEach(toggle => {
+                toggle.addEventListener('click', () => {
+                    const content = toggle.nextElementSibling;
+                    const icon = toggle.querySelector('.faq-icon');
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                        icon.style.transform = 'rotate(0deg)';
+                    } else {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                        icon.style.transform = 'rotate(180deg)';
+                    }
+                });
+            });
+
+            // Fade-in on scroll Logic
+            const sections = document.querySelectorAll('.fade-in-section');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>

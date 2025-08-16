@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hyper-Growth Pricing</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #010101;
+            overflow-x: hidden; /* Prevent horizontal scrollbar from animations */
+        }
+        
+        /* Animated background with sweeping light effect */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 15% 50%, rgba(255, 45, 85, 0.15), transparent 40%),
+                        radial-gradient(circle at 85% 30%, rgba(37, 244, 238, 0.15), transparent 40%);
+            z-index: -1;
+            animation: background-pan 30s linear infinite;
+        }
+
+        /* Header gradient text */
+        .gradient-text {
+            background: linear-gradient(90deg, #ff2d55, #ff4500, #ff6b00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* --- Enhanced Glow Effects --- */
+        .glow-border {
+            position: relative;
+            z-index: 1;
+        }
+
+        .glow-border::before {
+            content: '';
+            position: absolute;
+            top: -3px; left: -3px; right: -3px; bottom: -3px;
+            background: linear-gradient(45deg, #ff2d55, #ff4500, #25f4ee, #ff2d55);
+            background-size: 400%;
+            border-radius: 1.2rem; /* Match card's border-radius */
+            z-index: -1;
+            filter: blur(20px); /* Increased blur for a softer, wider glow */
+            animation: glow 15s linear infinite;
+            opacity: 0.9; /* Made the glow more prominent */
+        }
+        
+        /* --- Card and Button Styles --- */
+        .pricing-card {
+            background-color: rgba(18, 18, 18, 0.8); /* Semi-transparent background */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: slideInUp 0.6s ease-out forwards;
+            opacity: 0; /* Start hidden for animation */
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+        }
+        
+        .featured-card {
+            transform: scale(1.05);
+            box-shadow: 0 0 50px rgba(255, 45, 85, 0.1), 0 0 80px rgba(37, 244, 238, 0.1);
+        }
+        
+        .featured-card:hover {
+             transform: scale(1.08) translateY(-10px);
+        }
+
+        .cta-button-featured {
+            background: linear-gradient(90deg, #ff2d55, #25f4ee);
+            background-size: 200% auto;
+            transition: background-position 0.5s ease, box-shadow 0.3s ease;
+        }
+
+        .cta-button-featured:hover {
+            background-position: right center; /* Change gradient direction on hover */
+            box-shadow: 0 0 20px rgba(255, 45, 85, 0.5);
+        }
+
+        /* --- Enhanced Toggle Switch --- */
+        .billing-label {
+            cursor: pointer;
+            font-weight: 600;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+        
+        .billing-label.active {
+            color: #ffffff;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        }
+
+        .billing-label:not(.active) {
+            color: #6b7280; /* gray-500 */
+        }
+        
+        .billing-label:not(.active):hover {
+            color: #d1d5db; /* gray-300 */
+        }
+
+        .toggle-switch input:checked + .slider {
+            background: linear-gradient(90deg, #ff2d55, #25f4ee);
+            box-shadow: 0 0 15px #ff2d55, 0 0 15px #25f4ee;
+        }
+        .toggle-switch .slider {
+            background-color: #333;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .toggle-switch .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        /* --- Animations --- */
+        @keyframes glow {
+            0% { background-position: 0 0; }
+            50% { background-position: 400% 0; }
+            100% { background-position: 0 0; }
+        }
+        
+        @keyframes background-pan {
+            0% { transform: translateX(-10%) translateY(-10%) rotate(0deg); }
+            100% { transform: translateX(10%) translateY(10%) rotate(360deg); }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Staggered animation delays */
+        .pricing-card:nth-child(1) { animation-delay: 0.2s; }
+        .pricing-card:nth-child(2) { animation-delay: 0.3s; }
+        .pricing-card:nth-child(3) { animation-delay: 0.4s; }
+
+    </style>
+</head>
+<body class="text-white antialiased">
+
+    <div class="container mx-auto px-4 py-12 sm:py-20">
+
+        <!-- Header -->
+        <header class="text-center max-w-3xl mx-auto mb-12" style="animation: slideInUp 0.5s ease-out forwards; opacity: 0;">
+            <h1 class="text-4xl md:text-6xl font-black tracking-tighter mb-4">
+                Pricing That <span class="gradient-text">Ignites Growth</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-400">
+                Join millions of creators. No hidden fees, cancel anytime.
+            </p>
+        </header>
+
+        <!-- Pricing Toggle -->
+        <div class="flex items-center justify-center space-x-4 mb-16" style="animation: slideInUp 0.6s ease-out forwards; animation-delay: 0.1s; opacity: 0;">
+            <label for="billing-toggle" id="monthly-label" class="billing-label">Monthly</label>
+            <label class="toggle-switch relative inline-block w-[60px] h-[34px]">
+                <input type="checkbox" id="billing-toggle" class="opacity-0 w-0 h-0">
+                <span class="slider absolute cursor-pointer top-0 left-0 right-0 bottom-0"></span>
+            </label>
+            <label for="billing-toggle" id="yearly-label" class="billing-label">Yearly <span class="text-green-400 text-sm font-medium">(Save 20%)</span></label>
+        </div>
+
+        <!-- Pricing Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+
+            <!-- Plan 1: Starter -->
+            <div class="pricing-card rounded-2xl p-8 flex flex-col">
+                <h3 class="text-2xl font-bold mb-2">Starter</h3>
+                <p class="text-gray-400 mb-6">For individuals getting started.</p>
+                <div class="mb-6">
+                    <span class="text-5xl font-black price" data-monthly="15" data-yearly="12">$15</span>
+                    <span class="text-gray-400">/ month</span>
+                </div>
+                <ul class="space-y-4 text-gray-300 mb-8 flex-grow">
+                    <li class="flex items-center"><svg class="w-5 h-5 mr-3 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>10 Projects</li>
+                    <li class="flex items-center"><svg class="w-5 h-5 mr-3 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Basic Analytics</li>
+                    <li class="flex items-center"><svg class="w-5 h-5 mr-3 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>24/7 Email Support</li>
+                </ul>
+                <button class="w-full mt-auto bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300">Choose Plan</button>
+            </div>
+
+            <!-- Plan 2: Pro (Featured) -->
+            <div class="pricing-card featured-card rounded-2xl p-8 flex flex-col glow-border relative">
+                <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                    <span class="inline-block bg-gradient-to-r from-pink-500 to-cyan-400 text-white text-xs font-bold px-4 py-1 rounded-full uppercase tracking-wider">Most Popular</span>
+                </div>
+                <h3 class="text-2xl font-bold mb-2">Pro</h3>
+                <p class="text-gray-400 mb-6">For growing teams and creators.</p>
+                <div class="mb-6">
+                    <span class="text-5xl font-black price" data-monthly="45" data-yearly="36">$45</span>
+                    <span class="text-gray-400">/ month</span>
+                </div>
+                <ul class="space-y-4 text-gray-300 mb-8 flex-grow">
+                    <li class="flex items-center"><svg class="w-5 h-5 mr-3 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Unlimited Projects</li>
+                    <li class="flex items-center"><svg class="w-5 h-5 mr-3 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Advanced Analytics</li>
+                    <li class="flex items-center"><svg class="w-5 h-5 mr-3 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Collaboration Tools</li>
+                    <li class="flex items-center"><svg class="w-5 h-5 mr-3 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Priority Support</li>
+                </ul>
+                <button class="w-full mt-auto cta-button-featured text-white font-bold py-3 px-6 rounded-lg duration-300">Choose Plan</button>
+            </div>
+
+            <!-- Plan 3: Enterprise -->
+            <div class="pricing-card rounded-2xl p-8 flex flex-col">
+                <h3 class="text-2xl font-bold mb-2">Enterprise</h3>
+                <p class="text-gray-400 mb-6">For large-scale organizations.</p>
+                <div class="mb-6">
+                    <span class="text-4xl font-black">Custom</span>
+                </div>
+                <ul class="space-y-4 text-gray-300 mb-8 flex-grow">
+                    <li class="flex items-center"><svg class="w-5 h-5 mr-3 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Dedicated Infrastructure</li>
+                    <li class="flex items-center"><svg class="w-5 h-5 mr-3 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>SSO & Security Audits</li>
+                    <li class="flex items-center"><svg class="w-5 h-5 mr-3 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Personal Account Manager</li>
+                </ul>
+                <button class="w-full mt-auto bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300">Contact Sales</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggle = document.getElementById('billing-toggle');
+            const prices = document.querySelectorAll('.price');
+            const monthlyLabel = document.getElementById('monthly-label');
+            const yearlyLabel = document.getElementById('yearly-label');
+
+            function updatePricesAndLabels() {
+                const isYearly = toggle.checked;
+                
+                // Update prices
+                prices.forEach(priceEl => {
+                    const monthlyPrice = priceEl.getAttribute('data-monthly');
+                    const yearlyPrice = priceEl.getAttribute('data-yearly');
+                    priceEl.textContent = isYearly ? `$${yearlyPrice}` : `$${monthlyPrice}`;
+                });
+
+                // Update label styles
+                if (isYearly) {
+                    monthlyLabel.classList.remove('active');
+                    yearlyLabel.classList.add('active');
+                } else {
+                    yearlyLabel.classList.remove('active');
+                    monthlyLabel.classList.add('active');
+                }
+            }
+
+            // Event listener for the toggle switch
+            toggle.addEventListener('change', updatePricesAndLabels);
+
+            // Initialize on load
+            updatePricesAndLabels();
+        });
+    </script>
+</body>
+</html>
